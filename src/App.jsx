@@ -2,6 +2,8 @@ import "./App.css";
 import { useState } from "react";
 import Editor from "./components/editor";
 import Preview from "./components/preview";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [markdown, setMarkdown] =
@@ -50,20 +52,46 @@ And here. | Okay. | I think we get it.
 ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
 `);
   const [view, setView] = useState("both");
+  const [darkMode, setDarkMode] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div
+      className={`flex flex-col items-center justify-center min-h-screen p-48 gap-20 transition-colors duration-500 ${
+        darkMode ? "bg-indigo-900" : "bg-gray-100"
+      }`}
+    >
+      <div className="space-x-4">
+        <button
+          className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+          onClick={() => setView("editor")}
+        >
+          Editor
+        </button>
+        <button
+          className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+          onClick={() => setView("preview")}
+        >
+          Preview
+        </button>
+        <button
+          className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+          onClick={() => setView("both")}
+        >
+          Both
+        </button>
+        <button
+          className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+          onClick={() => setDarkMode(!darkMode)}
+        >
+          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
+        </button>
+      </div>
       {view === "both" || view === "editor" ? (
         <Editor markdown={markdown} setMarkdown={setMarkdown} />
       ) : null}
       {view === "both" || view === "preview" ? (
         <Preview markdown={markdown} />
       ) : null}
-      <div>
-        <button onClick={() => setView("editor")}>Editor</button>
-        <button onClick={() => setView("preview")}>Preview</button>
-        <button onClick={() => setView("both")}>Both</button>
-      </div>
     </div>
   );
 }
