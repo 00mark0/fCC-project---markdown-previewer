@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Editor from "./components/editor";
 import Preview from "./components/preview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -52,7 +52,14 @@ And here. | Okay. | I think we get it.
 ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
 `);
   const [view, setView] = useState("both");
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
   return (
     <div
@@ -60,7 +67,7 @@ And here. | Okay. | I think we get it.
         darkMode ? "bg-indigo-900" : "bg-gray-100"
       }`}
     >
-      <div className="space-x-4">
+      <div className="flex flex-col items-center justify-center gap-2 md:flex-row md:justify-center md:items-center">
         <button
           className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
           onClick={() => setView("editor")}

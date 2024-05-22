@@ -12,7 +12,7 @@ function Editor({ markdown, setMarkdown }) {
       </div>
       <textarea
         id="editor"
-        className="w-96 h-64 p-4 bg-gray-800 text-green-200"
+        className="w-64 md:w-96 h-64 p-4 bg-gray-800 text-green-200"
         value={markdown}
         onChange={(e) => setMarkdown(e.target.value)}
       />
